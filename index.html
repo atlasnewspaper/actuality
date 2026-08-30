@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas — Actualités</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#000000;
+    --paper:#FFFFFF;
+    --gray-1:#F2F2F2;
+    --gray-line:#DEDEDE;
+    --gray-text:#4A4A4A;
+    --gray-mid:#8A8A8A;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Inter",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:"Space Grotesk",sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input,textarea,select{font-family:"Inter",sans-serif;}
+  h1,h2,h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:800;
+    margin:0;
+  }
+  #app{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  /* ---------- MASTHEAD ---------- */
+  .masthead-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 32px;
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    color:var(--gray-text);
+    border-bottom:1px solid var(--gray-line);
+  }
+  .admin-link{
+    background:none;
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+    padding:7px 16px;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .admin-link:hover{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .masthead-main{
+    text-align:center;
+    padding:36px 20px 28px;
+    border-bottom:1px solid var(--ink);
+  }
+  .masthead-main .logo{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:800;
+    font-size:58px;
+    letter-spacing:-0.02em;
+    line-height:1;
+    margin:0;
+    cursor:pointer;
+  }
+  .masthead-main .tagline{
+    font-size:11px;
+    letter-spacing:0.22em;
+    font-weight:600;
+    text-transform:uppercase;
+    color:var(--gray-mid);
+    margin-top:10px;
+  }
+  /* ---------- NAV ---------- */
+  .nav{
+    background:var(--ink);
+  }
+  .nav-inner{
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .nav-inner button{
+    background:none;
+    border:none;
+    color:#FFFFFF;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    padding:14px 20px;
+    border-bottom:2px solid transparent;
+    opacity:0.7;
+  }
+  .nav-inner button:hover{
+    opacity:1;
+    border-bottom-color:#666;
+  }
+  .nav-inner button.active{
+    opacity:1;
+    border-bottom-color:#FFFFFF;
+  }
+  /* ---------- CONTENT ---------- */
+  main{
+    flex:1;
+    max-width:1180px;
+    margin:0 auto;
+    padding:40px 24px 70px;
+    width:100%;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gray-text);
+    font-weight:700;
+  }
+  /* ---------- MEDIA ---------- */
+  .media{
+    width:100%;
+    aspect-ratio:16/10;
+    background:var(--gray-1);
+    overflow:hidden;
+    position:relative;
+  }
+  .media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .media.placeholder{
+    background-image:repeating-linear-gradient(
+      45deg,
+      var(--gray-line) 0,
+      var(--gray-line) 1px,
+      transparent 1px,
+      transparent 13px
+    );
+    background-color:var(--paper);
+  }
+  /* ---------- HERO ---------- */
+  .hero{
+    display:block;
+    padding-bottom:36px;
+    margin-bottom:40px;
+    border-bottom:2px solid var(--ink);
+    cursor:pointer;
+  }
+  .hero .media{
+    aspect-ratio:21/9;
+    margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:42px;
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    margin:12px 0 14px;
+  }
+  .hero .dek{
+    color:var(--gray-text);
+    font-size:18px;
+    line-height:1.5;
+    margin:0 0 12px;
+    max-width:720px;
+  }
+  .hero:hover h1{
+    text-decoration:underline;
+  }
+  .meta-row{
+    font-size:11.5px;
+    color:var(--gray-mid);
+    font-weight:600;
+    margin-top:6px;
+    letter-spacing:0.02em;
+  }
+  /* ---------- CARDS ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .article-card{
+    cursor:pointer;
+    border:1px solid var(--gray-line);
+  }
+  .article-card .card-body{
+    padding:16px;
+  }
+  .article-card h3{
+    font-size:19px;
+    line-height:1.22;
+    letter-spacing:-0.005em;
+    margin:10px 0 8px;
+  }
+  .article-card p.dek{
+    color:var(--gray-text);
+    font-size:14px;
+    line-height:1.5;
+    margin:0;
+  }
+  .article-card:hover h3{
+    text-decoration:underline;
+  }
+  .article-card:hover{
+    border-color:var(--ink);
+  }
+  /* ---------- SECTIONS ---------- */
+  .section-block{
+    margin-bottom:48px;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:22px;
+    padding-bottom:12px;
+    border-bottom:2px solid var(--ink);
+  }
+  .section-head h2{
+    font-size:15px;
+    letter-spacing:0.02em;
+  }
+  /* ---------- ARTICLE ---------- */
+  .article-page{
+    max-width:760px;
+    margin:0 auto;
+  }
+  .back-btn{
+    background:none;
+    border:none;
+    font-size:13px;
+    font-weight:600;
+    color:var(--gray-text);
+    margin-bottom:24px;
+    padding:0;
+  }
+  .back-btn:hover{
+    color:var(--ink);
+    text-decoration:underline;
+  }
+  .article-page h1{
+    font-size:40px;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin:14px 0 14px;
+  }
+  .article-page .dek{
+    font-size:19px;
+    color:var(--gray-text);
+    line-height:1.5;
+    margin:0 0 18px;
+  }
+  .byline{
+    font-size:12.5px;
+    color:var(--gray-text);
+    font-weight:500;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--gray-line);
+    padding:12px 0;
+    margin-bottom:28px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .byline b{
+    color:var(--ink);
+  }
+  .article-page .media{
+    margin-bottom:28px;
+    aspect-ratio:16/9;
+  }
+  .article-body{
+    font-size:18px;
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .article-body p{
+    margin:0 0 20px;
+  }
+  /* ---------- EMPTY ---------- */
+  .empty-state{
+    text-align:center;
+    padding:80px 20px;
+    color:var(--gray-text);
+  }
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--paper);
+    color:var(--gray-mid);
+    font-size:11.5px;
+    text-align:center;
+    padding:26px 20px;
+    border-top:1px solid var(--gray-line);
+    font-weight:500;
+  }
+  /* ---------- AUTH ---------- */
+  .auth-wrap{
+    max-width:380px;
+    margin:70px auto;
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    padding:36px 32px;
+  }
+  .auth-wrap h2{
+    font-size:24px;
+    margin:0 0 6px;
+  }
+  .auth-wrap p.sub{
+    color:var(--gray-text);
+    font-size:13.5px;
+    margin:0 0 22px;
+    font-weight:500;
+  }
+  .field{
+    margin-bottom:16px;
+  }
+  .field label{
+    display:block;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .field input,
+  .field textarea,
+  .field select{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--gray-mid);
+    border-radius:0;
+    font-size:14px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .field textarea{
+    resize:vertical;
+    min-height:200px;
+    line-height:1.6;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus{
+    outline:none;
+    border-color:var(--ink);
+  }
+  .field-hint{
+    font-size:11.5px;
+    color:var(--gray-mid);
+    margin-top:5px;
+  }
+  .err-text{
+    color:var(--ink);
+    font-size:12.5px;
+    margin-top:6px;
+    font-weight:700;
+  }
+  .btn{
+    font-weight:700;
+    font-size:13.5px;
+    padding:11px 20px;
+    border-radius:0;
+    border:1.5px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    letter-spacing:0.01em;
+  }
+  .btn:hover{
+    background:#333;
+  }
+  .btn.ghost{
+    background:none;
+    color:var(--ink);
+  }
+  .btn.ghost:hover{
+    background:var(--gray-1);
+  }
+  .btn.block{
+    width:100%;
+  }
+  /* ---------- ADMIN ---------- */
+  .admin-shell{
+    max-width:1020px;
+    margin:0 auto;
+  }
+  .admin-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+    gap:12px;
+    padding-bottom:16px;
+    border-bottom:2px solid var(--ink);
+  }
+  .admin-top h1{
+    font-size:26px;
+  }
+  .admin-top .sub{
+    color:var(--gray-text);
+    font-size:13px;
+    margin-top:4px;
+    font-weight:500;
+  }
+  .admin-actions{
+    display:flex;
+    gap:10px;
+  }
+  table.admin-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+  }
+  table.admin-table th{
+    text-align:left;
+    background:var(--paper);
+    color:var(--ink);
+    font-weight:700;
+    font-size:11.5px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    padding:10px 6px;
+    border-bottom:2px solid var(--ink);
+  }
+  table.admin-table td{
+    padding:12px 6px;
+    border-bottom:1px solid var(--gray-line);
+    vertical-align:middle;
+  }
+  .status-pill{
+    font-size:11px;
+    padding:3px 10px;
+    font-weight:700;
+    letter-spacing:0.02em;
+    border:1.5px solid var(--ink);
+    display:inline-block;
+  }
+  .status-pill.draft{
+    color:var(--gray-text);
+    border-color:var(--gray-mid);
+  }
+  .row-actions{
+    display:flex;
+    gap:12px;
+  }
+  .row-actions button{
+    background:none;
+    border:none;
+    color:var(--gray-text);
+    font-size:12.5px;
+    padding:2px 0;
+    font-weight:600;
+    text-decoration:underline;
+  }
+  .row-actions button:hover{
+    color:var(--ink);
+  }
+  .editor-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:28px;
+    align-items:start;
+  }
+  .editor-card{
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    padding:22px;
+  }
+  .editor-card h3{
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--ink);
+    margin:0 0 16px;
+    border-bottom:1px solid var(--gray-line);
+    padding-bottom:10px;
+  }
+  .checkbox-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    font-weight:500;
+  }
+  .checkbox-row input{
+    width:auto;
+  }
+  /* ---------- IMAGE ---------- */
+  .image-upload-box{
+    border:1.5px dashed var(--gray-mid);
+    padding:18px;
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .image-upload-box img{
+    width:100%;
+    display:block;
+    margin-bottom:12px;
+    aspect-ratio:16/9;
+    object-fit:cover;
+  }
+  .image-upload-box .upload-empty{
+    padding:26px 10px;
+    color:var(--gray-mid);
+    font-size:13px;
+    font-weight:600;
+  }
+  .image-upload-actions{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+  }
+  .image-upload-actions .btn{
+    font-size:12px;
+    padding:8px 14px;
+  }
+  /* ---------- TOAST ---------- */
+  .toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--ink);
+    color:var(--paper);
+    font-size:13.5px;
+    font-weight:600;
+    padding:11px 22px;
+    z-index:999;
+  }
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:900px){
+    .card-grid{
+      grid-template-columns:repeat(2,1fr);
+    }
+  }
+  @media(max-width:760px){
+    .card-grid{
+      grid-template-columns:1fr;
+    }
+    .editor-grid{
+      grid-template-columns:1fr;
+    }
+    .masthead-main .logo{
+      font-size:42px;
+    }
+    .article-page h1,
+    .hero h1{
+      font-size:30px;
+    }
+    .masthead-top{
+      padding:8px 16px;
+    }
+    table.admin-table{
+      font-size:12px;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ============================================================
+   ATLAS
+   Version compatible avec GitHub Pages
+   Stockage : localStorage du navigateur
+   ============================================================ */
+var ADMIN_PASSWORD = "atlas2026";
+var STORAGE_KEY = "atlas-articles-v4";
+var MAX_IMAGE_WIDTH = 1280;
+var CATEGORIES = [
+  "Monde",
+  "Politique",
+  "Economie",
+  "Societe",
+  "Culture",
+  "Sport"
+];
+var state = {
+  view: "home",
+  category: null,
+  articleId: null,
+  editingId: null,
+  loggedIn: false,
+  loading: true
+};
+var articles = [];
+/* ============================================================
+   ARTICLES PAR DEFAUT
+   ============================================================ */
+function seedArticles(){
+  var now = Date.now();
+  var day = 86400000;
+  return [
+    {
+      id:"a1",
+      title:"Sommet climatique : les negociateurs trouvent un compromis de derniere minute",
+      dek:"Apres trois jours de discussions tendues, les delegations se sont accordees sur un texte commun concernant le financement de la transition energetique.",
+      category:"Monde",
+      author:"Camille Fontaine",
+      date:now-day*0.2,
+      featured:true,
+      status:"published",
+      image:null,
+      body:"Les delegations reunies depuis lundi sont parvenues dans la nuit a un accord juge historique par plusieurs observateurs. Le texte prevoit une enveloppe substantielle destinee a accompagner les pays les plus vulnerables face au dereglement climatique.\n\nPlusieurs points de friction subsistaient encore samedi soir, notamment sur le calendrier de versement des fonds. Les negociateurs ont finalement trouve un terrain d'entente autour d'un mecanisme de revision annuelle.\n\nLes organisations non gouvernementales presentes sur place saluent une avancee reelle, tout en appelant a la vigilance sur la mise en oeuvre concrete des engagements pris."
+    },
+    {
+      id:"a2",
+      title:"La banque centrale maintient ses taux, contre toute attente",
+      dek:"Les marches tablaient sur une baisse. L'institution justifie son choix par des tensions persistantes sur les prix de l'energie.",
+      category:"Economie",
+      author:"Julien Marchetti",
+      date:now-day*0.6,
+      featured:true,
+      status:"published",
+      image:null,
+      body:"Contre les anticipations de la majorite des analystes, l'institution a choisi de laisser ses taux directeurs inchanges lors de sa reunion de politique monetaire.\n\nDans son communique, elle evoque des incertitudes persistantes sur l'evolution des prix de l'energie et une inflation sous-jacente encore trop elevee pour justifier un assouplissement.\n\nLes marches financiers ont reagi avec prudence, dans l'attente de nouveaux indicateurs economiques attendus la semaine prochaine."
+    },
+    {
+      id:"a3",
+      title:"Reforme des retraites : la commission rendra son rapport en janvier",
+      dek:"Le calendrier a ete confirme apres plusieurs semaines de consultations avec les partenaires sociaux.",
+      category:"Politique",
+      author:"Nora Benali",
+      date:now-day*1.1,
+      featured:false,
+      status:"published",
+      image:null,
+      body:"La commission chargee d'evaluer les pistes de reforme a confirme qu'elle rendrait ses conclusions au tout debut de l'annee prochaine, un calendrier legerement resserre par rapport aux annonces initiales.\n\nPlusieurs organisations syndicales ont reaffirme leurs reserves sur certaines options actuellement a l'etude, tandis que le patronat plaide pour une mise en oeuvre rapide.\n\nLe gouvernement se garde pour l'instant de tout commentaire sur le contenu du futur rapport."
+    },
+    {
+      id:"a4",
+      title:"Une exposition inedite consacree aux avant-gardes des annees 1920",
+      dek:"Le musee presente une centaine d'oeuvres rarement montrees au public, issues de collections privees europeennes.",
+      category:"Culture",
+      author:"Louis Verhaeghe",
+      date:now-day*1.8,
+      featured:false,
+      status:"published",
+      image:null,
+      body:"L'exposition reunit des toiles, sculptures et documents d'archives illustrant l'effervescence artistique de cette decennie charniere.\n\nLe parcours, pense de facon chronologique, met en lumiere les echanges entre les differentes scenes artistiques europeennes de l'epoque.\n\nLes organisateurs esperent attirer un large public durant les mois d'hiver, periode traditionnellement favorable aux expositions temporaires."
+    },
+    {
+      id:"a5",
+      title:"Hopitaux : les urgences sous tension a l'approche de l'hiver",
+      dek:"Plusieurs etablissements signalent un afflux de patients superieur aux moyennes saisonnieres habituelles.",
+      category:"Societe",
+      author:"Camille Fontaine",
+      date:now-day*2.3,
+      featured:false,
+      status:"published",
+      image:null,
+      body:"Les services d'urgence de plusieurs grandes agglomerations font etat d'une affluence inhabituelle pour cette periode de l'annee.\n\nLes directions hospitalieres evoquent une conjonction de facteurs, entre reprise epidemique saisonniere et tensions persistantes sur les effectifs soignants.\n\nDes mesures d'organisation renforcee ont ete annoncees dans plusieurs regions afin de limiter les delais de prise en charge."
+    },
+    {
+      id:"a6",
+      title:"Le club poursuit sa serie d'invincibilite a domicile",
+      dek:"Une victoire serree qui permet a l'equipe de conforter sa place sur le podium.",
+      category:"Sport",
+      author:"Marc Aubin",
+      date:now-day*2.9,
+      featured:false,
+      status:"published",
+      image:null,
+      body:"Dans un match longtemps dispute, l'equipe locale est parvenue a faire la difference dans le dernier quart d'heure.\n\nCe resultat porte a onze le nombre de rencontres sans defaite a domicile cette saison.\n\nL'entraineur a salue la solidite defensive de son collectif, tout en pointant des axes d'amelioration offensifs pour les prochaines echeances."
+    }
+  ];
+}
+/* ============================================================
+   STOCKAGE GITHUB PAGES
+   ============================================================ */
+function loadArticles(){
+  try{
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if(saved){
+      articles = JSON.parse(saved);
+    }else{
+      articles = seedArticles();
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(articles)
+      );
+    }
+  }catch(error){
+    console.error("Erreur de chargement :",error);
+    articles = seedArticles();
+  }
+  state.loading = false;
+  render();
+}
+function saveArticles(){
+  try{
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(articles)
+    );
+    return Promise.resolve();
+  }catch(error){
+    console.error("Erreur de sauvegarde :",error);
+    showToast("Erreur de sauvegarde.");
+    return Promise.reject(error);
+  }
+}
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function goto(view,extra){
+  state.view = view;
+  if(extra){
+    for(var k in extra){
+      state[k] = extra[k];
+    }
+  }
+  window.scrollTo(0,0);
+  render();
+}
+/* ============================================================
+   DATES
+   ============================================================ */
+function fmtDate(ts){
+  var d = new Date(ts);
+  return d.toLocaleDateString(
+    "fr-FR",
+    {
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    }
+  )
+  +
+  " - "
+  +
+  d.toLocaleTimeString(
+    "fr-FR",
+    {
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+}
+/* ============================================================
+   ARTICLES PUBLIES
+   ============================================================ */
+function published(){
+  return articles
+    .filter(function(a){
+      return a.status === "published";
+    })
+    .sort(function(a,b){
+      return b.date-a.date;
+    });
+}
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg){
+  var t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){
+    t.remove();
+  },2600);
+}
+/* ============================================================
+   SECURITE HTML
+   ============================================================ */
+function escapeHtml(s){
+  var d = document.createElement("div");
+  d.textContent = s || "";
+  return d.innerHTML;
+}
+/* ============================================================
+   MEDIA
+   ============================================================ */
+function mediaEl(article,extraClass){
+  var m = document.createElement("div");
+  m.className =
+    "media"
+    +
+    (extraClass ? " "+extraClass : "")
+    +
+    (article.image ? "" : " placeholder");
+  if(article.image){
+    var img = document.createElement("img");
+    img.src = article.image;
+    img.alt = article.title;
+    m.appendChild(img);
+  }
+  return m;
+}
+/* ============================================================
+   RENDER ROOT
+   ============================================================ */
+function render(){
+  var app = document.getElementById("app");
+  app.innerHTML = "";
+  app.appendChild(renderMasthead());
+  var main = document.createElement("main");
+  if(state.loading){
+    main.innerHTML =
+      '<div class="empty-state">Chargement d’Atlas...</div>';
+  }
+  else if(state.view === "home"){
+    main.appendChild(renderHome());
+  }
+  else if(state.view === "category"){
+    main.appendChild(renderCategory());
+  }
+  else if(state.view === "article"){
+    main.appendChild(renderArticlePage());
+  }
+  else if(state.view === "login"){
+    main.appendChild(renderLogin());
+  }
+  else if(state.view === "admin"){
+    main.appendChild(
+      state.loggedIn
+      ? renderAdminDashboard()
+      : renderLogin()
+    );
+  }
+  else if(state.view === "editor"){
+    main.appendChild(
+      state.loggedIn
+      ? renderEditor()
+      : renderLogin()
+    );
+  }
+  app.appendChild(main);
+  app.appendChild(renderFooter());
+}
+/* ============================================================
+   MASTHEAD
+   ============================================================ */
+function renderMasthead(){
+  var outer = document.createElement("div");
+  var top = document.createElement("div");
+  top.className = "masthead-top";
+  var dateSpan = document.createElement("span");
+  dateSpan.textContent =
+    new Date().toLocaleDateString(
+      "fr-FR",
+      {
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+      }
+    );
+  var adminBtn = document.createElement("button");
+  adminBtn.className = "admin-link";
+  adminBtn.textContent =
+    state.loggedIn
+    ? "Espace admin"
+    : "Connexion";
+  adminBtn.onclick = function(){
+    goto(
+      state.loggedIn
+      ? "admin"
+      : "login"
+    );
+  };
+  top.appendChild(dateSpan);
+  top.appendChild(adminBtn);
+  var mainHead = document.createElement("div");
+  mainHead.className = "masthead-main";
+  var logo = document.createElement("p");
+  logo.className = "logo";
+  logo.textContent = "ATLAS";
+  logo.onclick = function(){
+    goto("home");
+  };
+  var tagline = document.createElement("p");
+  tagline.className = "tagline";
+  tagline.textContent =
+    "Comprendre le monde, chaque jour";
+  mainHead.appendChild(logo);
+  mainHead.appendChild(tagline);
+  var nav = document.createElement("div");
+  nav.className = "nav";
+  var navInner = document.createElement("div");
+  navInner.className = "nav-inner";
+  var homeBtn = document.createElement("button");
+  homeBtn.textContent = "A la une";
+  homeBtn.className =
+    state.view === "home"
+    ? "active"
+    : "";
+  homeBtn.onclick = function(){
+    goto("home");
+  };
+  navInner.appendChild(homeBtn);
+  CATEGORIES.forEach(function(cat){
+    var b = document.createElement("button");
+    b.textContent = cat;
+    b.className =
+      (
+        state.view === "category"
+        &&
+        state.category === cat
+      )
+      ? "active"
+      : "";
+    b.onclick = function(){
+      goto(
+        "category",
+        {
+          category:cat
+        }
+      );
+    };
+    navInner.appendChild(b);
+  });
+  nav.appendChild(navInner);
+  outer.appendChild(top);
+  outer.appendChild(mainHead);
+  outer.appendChild(nav);
+  return outer;
+}
+/* ============================================================
+   CARTE ARTICLE
+   ============================================================ */
+function articleCard(a){
+  var card = document.createElement("div");
+  card.className = "article-card";
+  card.appendChild(mediaEl(a));
+  var body = document.createElement("div");
+  body.className = "card-body";
+  var eyebrow = document.createElement("div");
+  eyebrow.className = "eyebrow";
+  eyebrow.textContent = a.category;
+  var h3 = document.createElement("h3");
+  h3.textContent = a.title;
+  var dek = document.createElement("p");
+  dek.className = "dek";
+  dek.textContent = a.dek;
+  body.appendChild(eyebrow);
+  body.appendChild(h3);
+  body.appendChild(dek);
+  card.appendChild(body);
+  card.onclick = function(){
+    goto(
+      "article",
+      {
+        articleId:a.id
+      }
+    );
+  };
+  return card;
+}
+/* ============================================================
+   ACCUEIL
+   ============================================================ */
+function renderHome(){
+  var wrap = document.createElement("div");
+  var pub = published();
+  if(pub.length === 0){
+    var empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent =
+      "Aucun article publie pour le moment.";
+    wrap.appendChild(empty);
+    return wrap;
+  }
+  var featured =
+    pub.filter(function(a){
+      return a.featured;
+    });
+  var lead =
+    featured[0]
+    ||
+    pub[0];
+  var rest =
+    pub.filter(function(a){
+      return a.id !== lead.id;
+    });
+  var hero = document.createElement("div");
+  hero.className = "hero";
+  hero.appendChild(mediaEl(lead));
+  var eyebrow = document.createElement("div");
+  eyebrow.className = "eyebrow";
+  eyebrow.textContent =
+    lead.category+" - A la une";
+  var h1 = document.createElement("h1");
+  h1.textContent = lead.title;
+  var dek = document.createElement("p");
+  dek.className = "dek";
+  dek.textContent = lead.dek;
+  var meta = document.createElement("div");
+  meta.className = "meta-row";
+  meta.textContent =
+    lead.author+" - "+fmtDate(lead.date);
+  hero.appendChild(eyebrow);
+  hero.appendChild(h1);
+  hero.appendChild(dek);
+  hero.appendChild(meta);
+  hero.onclick = function(){
+    goto(
+      "article",
+      {
+        articleId:lead.id
+      }
+    );
+  };
+  wrap.appendChild(hero);
+  if(rest.length > 0){
+    var block = document.createElement("div");
+    block.className = "section-block";
+    var head = document.createElement("div");
+    head.className = "section-head";
+    var h2 = document.createElement("h2");
+    h2.textContent = "Derniers articles";
+    head.appendChild(h2);
+    block.appendChild(head);
+    var grid = document.createElement("div");
+    grid.className = "card-grid";
+    rest
+      .slice(0,6)
+      .forEach(function(a){
+        grid.appendChild(
+          articleCard(a)
+        );
+      });
+    block.appendChild(grid);
+    wrap.appendChild(block);
+  }
+  CATEGORIES.forEach(function(cat){
+    var items =
+      pub.filter(function(a){
+        return (
+          a.category === cat
+          &&
+          a.id !== lead.id
+        );
+      });
+    if(items.length === 0) return;
+    var block2 =
+      document.createElement("div");
+    block2.className = "section-block";
+    var head2 =
+      document.createElement("div");
+    head2.className = "section-head";
+    var h2b =
+      document.createElement("h2");
+    h2b.textContent = cat;
+    head2.appendChild(h2b);
+    block2.appendChild(head2);
+    var grid2 =
+      document.createElement("div");
+    grid2.className = "card-grid";
+    items
+      .slice(0,3)
+      .forEach(function(a){
+        grid2.appendChild(
+          articleCard(a)
+        );
+      });
+    block2.appendChild(grid2);
+    wrap.appendChild(block2);
+  });
+  return wrap;
+}
+/* ============================================================
+   CATEGORIE
+   ============================================================ */
+function renderCategory(){
+  var wrap =
+    document.createElement("div");
+  var items =
+    published().filter(function(a){
+      return a.category === state.category;
+    });
+  var head =
+    document.createElement("div");
+  head.className = "section-head";
+  var h2 =
+    document.createElement("h2");
+  h2.textContent = state.category;
+  head.appendChild(h2);
+  wrap.appendChild(head);
+  if(items.length === 0){
+    var empty =
+      document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent =
+      "Aucun article dans cette rubrique pour le moment.";
+    wrap.appendChild(empty);
+    return wrap;
+  }
+  var grid =
+    document.createElement("div");
+  grid.className = "card-grid";
+  items.forEach(function(a){
+    grid.appendChild(
+      articleCard(a)
+    );
+  });
+  wrap.appendChild(grid);
+  return wrap;
+}
+/* ============================================================
+   PAGE ARTICLE
+   ============================================================ */
+function renderArticlePage(){
+  var a = null;
+  for(
+    var i=0;
+    i<articles.length;
+    i++
+  ){
+    if(
+      articles[i].id ===
+      state.articleId
+    ){
+      a = articles[i];
+      break;
+    }
+  }
+  var wrap =
+    document.createElement("div");
+  wrap.className = "article-page";
+  if(
+    !a
+    ||
+    (
+      a.status !== "published"
+      &&
+      !state.loggedIn
+    )
+  ){
+    var empty =
+      document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent =
+      "Cet article est introuvable.";
+    wrap.appendChild(empty);
+    return wrap;
+  }
+  var back =
+    document.createElement("button");
+  back.className = "back-btn";
+  back.textContent = "← Retour";
+  back.onclick = function(){
+    goto("home");
+  };
+  wrap.appendChild(back);
+  var eyebrow =
+    document.createElement("div");
+  eyebrow.className = "eyebrow";
+  eyebrow.textContent = a.category;
+  var h1 =
+    document.createElement("h1");
+  h1.textContent = a.title;
+  var dek =
+    document.createElement("p");
+  dek.className = "dek";
+  dek.textContent = a.dek;
+  var byline =
+    document.createElement("div");
+  byline.className = "byline";
+  var b1 =
+    document.createElement("span");
+  b1.innerHTML =
+    "Par <b>"
+    +
+    escapeHtml(a.author)
+    +
+    "</b>";
+  var b2 =
+    document.createElement("span");
+  b2.textContent =
+    fmtDate(a.date);
+  byline.appendChild(b1);
+  byline.appendChild(b2);
+  if(a.status === "draft"){
+    var pill =
+      document.createElement("span");
+    pill.className =
+      "status-pill draft";
+    pill.textContent =
+      "Brouillon";
+    byline.appendChild(pill);
+  }
+  var body =
+    document.createElement("div");
+  body.className =
+    "article-body";
+  (a.body || "")
+    .split("\n\n")
+    .forEach(function(p){
+      if(!p.trim()) return;
+      var pEl =
+        document.createElement("p");
+      pEl.textContent = p;
+      body.appendChild(pEl);
+    });
+  wrap.appendChild(eyebrow);
+  wrap.appendChild(h1);
+  wrap.appendChild(dek);
+  wrap.appendChild(byline);
+  wrap.appendChild(mediaEl(a));
+  wrap.appendChild(body);
+  return wrap;
+}
+/* ============================================================
+   CONNEXION
+   ============================================================ */
+function renderLogin(){
+  var wrap =
+    document.createElement("div");
+  wrap.className =
+    "auth-wrap";
+  var h2 =
+    document.createElement("h2");
+  h2.textContent =
+    "Connexion";
+  var sub =
+    document.createElement("p");
+  sub.className = "sub";
+  sub.textContent =
+    "Reserve a la redaction d'Atlas.";
+  var field =
+    document.createElement("div");
+  field.className = "field";
+  var label =
+    document.createElement("label");
+  label.textContent =
+    "Mot de passe";
+  var input =
+    document.createElement("input");
+  input.type = "password";
+  input.placeholder =
+    "Mot de passe admin";
+  field.appendChild(label);
+  field.appendChild(input);
+  var err =
+    document.createElement("div");
+  err.className = "err-text";
+  err.style.display =
+    "none";
+  var btn =
+    document.createElement("button");
+  btn.className =
+    "btn block";
+  btn.textContent =
+    "Se connecter";
+  function doLogin(){
+    var val =
+      input.value;
+    if(!val){
+      err.textContent =
+        "Entrez un mot de passe.";
+      err.style.display =
+        "block";
+      return;
+    }
+    if(val === ADMIN_PASSWORD){
+      state.loggedIn = true;
+      goto("admin");
+    }else{
+      err.textContent =
+        "Mot de passe incorrect.";
+      err.style.display =
+        "block";
+    }
+  }
+  btn.onclick = doLogin;
+  input.addEventListener(
+    "keydown",
+    function(e){
+      if(e.key === "Enter")
+        doLogin();
+      err.style.display =
+        "none";
+    }
+  );
+  wrap.appendChild(h2);
+  wrap.appendChild(sub);
+  wrap.appendChild(field);
+  wrap.appendChild(err);
+  wrap.appendChild(btn);
+  return wrap;
+}
+/* ============================================================
+   ADMIN
+   ============================================================ */
+function renderAdminDashboard(){
+  var wrap =
+    document.createElement("div");
+  wrap.className =
+    "admin-shell";
+  var top =
+    document.createElement("div");
+  top.className =
+    "admin-top";
+  var titleWrap =
+    document.createElement("div");
+  var h1 =
+    document.createElement("h1");
+  h1.textContent =
+    "Espace redaction";
+  var sub =
+    document.createElement("p");
+  sub.className =
+    "sub";
+  sub.textContent =
+    articles.length
+    +
+    " article(s) - "
+    +
+    published().length
+    +
+    " publie(s)";
+  titleWrap.appendChild(h1);
+  titleWrap.appendChild(sub);
+  var actions =
+    document.createElement("div");
+  actions.className =
+    "admin-actions";
+  var logoutBtn =
+    document.createElement("button");
+  logoutBtn.className =
+    "btn ghost";
+  logoutBtn.textContent =
+    "Deconnexion";
+  logoutBtn.onclick =
+    function(){
+      state.loggedIn =
+        false;
+      goto("home");
+    };
+  var newBtn =
+    document.createElement("button");
+  newBtn.className =
+    "btn";
+  newBtn.textContent =
+    "+ Nouvel article";
+  newBtn.onclick =
+    function(){
+      goto(
+        "editor",
+        {
+          editingId:null
+        }
+      );
+    };
+  actions.appendChild(logoutBtn);
+  actions.appendChild(newBtn);
+  top.appendChild(titleWrap);
+  top.appendChild(actions);
+  wrap.appendChild(top);
+  var table =
+    document.createElement("table");
+  table.className =
+    "admin-table";
+  var thead =
+    document.createElement("tr");
+  [
+    "Titre",
+    "Rubrique",
+    "Statut",
+    "Date",
+    ""
+  ]
+  .forEach(function(t){
+    var th =
+      document.createElement("th");
+    th.textContent = t;
+    thead.appendChild(th);
+  });
+  table.appendChild(thead);
+  var sorted =
+    articles
+      .slice()
+      .sort(function(a,b){
+        return b.date-a.date;
+      });
+  if(sorted.length === 0){
+    var tr =
+      document.createElement("tr");
+    var td =
+      document.createElement("td");
+    td.colSpan = 5;
+    td.style.textAlign =
+      "center";
+    td.style.color =
+      "var(--gray-text)";
+    td.style.padding =
+      "30px";
+    td.textContent =
+      "Aucun article. Cliquez sur “Nouvel article” pour commencer.";
+    tr.appendChild(td);
+    table.appendChild(tr);
+  }
+  sorted.forEach(function(a){
+    var tr =
+      document.createElement("tr");
+    var tdTitle =
+      document.createElement("td");
+    tdTitle.textContent =
+      a.title;
+    var tdCat =
+      document.createElement("td");
+    tdCat.textContent =
+      a.category;
+    var tdStatus =
+      document.createElement("td");
+    var pill =
+      document.createElement("span");
+    pill.className =
+      "status-pill"
+      +
+      (
+        a.status === "draft"
+        ? " draft"
+        : ""
+      );
+    pill.textContent =
+      a.status === "published"
+      ? "Publie"
+      : "Brouillon";
+    tdStatus.appendChild(pill);
+    var tdDate =
+      document.createElement("td");
+    tdDate.textContent =
+      fmtDate(a.date);
+    var tdActions =
+      document.createElement("td");
+    var rowActions =
+      document.createElement("div");
+    rowActions.className =
+      "row-actions";
+    var viewBtn =
+      document.createElement("button");
+    viewBtn.textContent =
+      "Voir";
+    viewBtn.onclick =
+      function(){
+        goto(
+          "article",
+          {
+            articleId:a.id
+          }
+        );
+      };
+    var editBtn =
+      document.createElement("button");
+    editBtn.textContent =
+      "Modifier";
+    editBtn.onclick =
+      function(){
+        goto(
+          "editor",
+          {
+            editingId:a.id
+          }
+        );
+      };
+    var delBtn =
+      document.createElement("button");
+    delBtn.textContent =
+      "Supprimer";
+    delBtn.onclick =
+      function(){
+        if(
+          confirm(
+            "Supprimer definitivement cet article ?"
+          )
+        ){
+          articles =
+            articles.filter(function(x){
+              return x.id !== a.id;
+            });
+          saveArticles()
+            .then(function(){
+              showToast(
+                "Article supprime"
+              );
+              goto("admin");
+            });
+        }
+      };
+    rowActions.appendChild(viewBtn);
+    rowActions.appendChild(editBtn);
+    rowActions.appendChild(delBtn);
+    tdActions.appendChild(rowActions);
+    tr.appendChild(tdTitle);
+    tr.appendChild(tdCat);
+    tr.appendChild(tdStatus);
+    tr.appendChild(tdDate);
+    tr.appendChild(tdActions);
+    table.appendChild(tr);
+  });
+  wrap.appendChild(table);
+  return wrap;
+}
+/* ============================================================
+   IMAGES
+   ============================================================ */
+function processImageFile(file,callback){
+  if(!file) return;
+  var reader =
+    new FileReader();
+  reader.onload =
+    function(e){
+      var img =
+        new Image();
+      img.onload =
+        function(){
+          var scale =
+            Math.min(
+              1,
+              MAX_IMAGE_WIDTH /
+              img.width
+            );
+          var w =
+            Math.round(
+              img.width * scale
+            );
+          var h =
+            Math.round(
+              img.height * scale
+            );
+          var canvas =
+            document.createElement(
+              "canvas"
+            );
+          canvas.width = w;
+          canvas.height = h;
+          var ctx =
+            canvas.getContext(
+              "2d"
+            );
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            w,
+            h
+          );
+          var dataUrl =
+            canvas.toDataURL(
+              "image/jpeg",
+              0.82
+            );
+          callback(dataUrl);
+        };
+      img.src =
+        e.target.result;
+    };
+  reader.readAsDataURL(file);
+}
+/* ============================================================
+   EDITEUR
+   ============================================================ */
+function renderEditor(){
+  var editing = null;
+  if(state.editingId){
+    for(
+      var i=0;
+      i<articles.length;
+      i++
+    ){
+      if(
+        articles[i].id ===
+        state.editingId
+      ){
+        editing =
+          articles[i];
+        break;
+      }
+    }
+  }
+  var currentImage =
+    editing
+    ? editing.image
+    : null;
+  var wrap =
+    document.createElement("div");
+  wrap.className =
+    "admin-shell";
+  var top =
+    document.createElement("div");
+  top.className =
+    "admin-top";
+  var titleWrap =
+    document.createElement("div");
+  var h1 =
+    document.createElement("h1");
+  h1.textContent =
+    editing
+    ? "Modifier l’article"
+    : "Nouvel article";
+  var sub =
+    document.createElement("p");
+  sub.className =
+    "sub";
+  sub.textContent =
+    editing
+    ? "Les modifications sont enregistrees a la publication."
+    : "Redigez puis publiez ou enregistrez en brouillon.";
+  titleWrap.appendChild(h1);
+  titleWrap.appendChild(sub);
+  var actions =
+    document.createElement("div");
+  actions.className =
+    "admin-actions";
+  var cancelBtn =
+    document.createElement("button");
+  cancelBtn.className =
+    "btn ghost";
+  cancelBtn.textContent =
+    "Annuler";
+  cancelBtn.onclick =
+    function(){
+      goto("admin");
+    };
+  actions.appendChild(cancelBtn);
+  top.appendChild(titleWrap);
+  top.appendChild(actions);
+  wrap.appendChild(top);
+  var grid =
+    document.createElement("div");
+  grid.className =
+    "editor-grid";
+  var mainCard =
+    document.createElement("div");
+  mainCard.className =
+    "editor-card";
+  var mh3 =
+    document.createElement("h3");
+  mh3.textContent =
+    "Contenu";
+  mainCard.appendChild(mh3);
+  function makeField(
+    labelText,
+    tag,
+    value,
+    placeholder
+  ){
+    var f =
+      document.createElement("div");
+    f.className =
+      "field";
+    var l =
+      document.createElement("label");
+    l.textContent =
+      labelText;
+    var el =
+      document.createElement(tag);
+    el.value =
+      value || "";
+    el.placeholder =
+      placeholder || "";
+    f.appendChild(l);
+    f.appendChild(el);
+    return {
+      wrap:f,
+      input:el
+    };
+  }
+  var titleField =
+    makeField(
+      "Titre",
+      "input",
+      editing
+      ? editing.title
+      : "",
+      "Titre de l'article"
+    );
+  var dekField =
+    makeField(
+      "Chapo (resume)",
+      "input",
+      editing
+      ? editing.dek
+      : "",
+      "Un resume accrocheur en une phrase"
+    );
+  var bodyField =
+    makeField(
+      "Corps de l'article",
+      "textarea",
+      editing
+      ? editing.body
+      : "",
+      "Redigez l'article ici. Separez les paragraphes par une ligne vide."
+    );
+  var errText =
+    document.createElement("div");
+  errText.className =
+    "err-text";
+  errText.style.display =
+    "none";
+  mainCard.appendChild(
+    titleField.wrap
+  );
+  mainCard.appendChild(
+    dekField.wrap
+  );
+  mainCard.appendChild(
+    bodyField.wrap
+  );
+  mainCard.appendChild(
+    errText
+  );
+  var sideCard =
+    document.createElement("div");
+  sideCard.className =
+    "editor-card";
+  var sh3 =
+    document.createElement("h3");
+  sh3.textContent =
+    "Publication";
+  sideCard.appendChild(sh3);
+  /* IMAGE */
+  var imgField =
+    document.createElement("div");
+  imgField.className =
+    "field";
+  var imgLabel =
+    document.createElement("label");
+  imgLabel.textContent =
+    "Image de couverture";
+  var imgBox =
+    document.createElement("div");
+  imgBox.className =
+    "image-upload-box";
+  var previewImg =
+    document.createElement("img");
+  previewImg.style.display =
+    currentImage
+    ? "block"
+    : "none";
+  if(currentImage)
+    previewImg.src =
+      currentImage;
+  var emptyLabel =
+    document.createElement("div");
+  emptyLabel.className =
+    "upload-empty";
+  emptyLabel.textContent =
+    "Aucune image selectionnee";
+  emptyLabel.style.display =
+    currentImage
+    ? "none"
+    : "block";
+  var fileInput =
+    document.createElement("input");
+  fileInput.type =
+    "file";
+  fileInput.accept =
+    "image/*";
+  fileInput.style.display =
+    "none";
+  var uploadActions =
+    document.createElement("div");
+  uploadActions.className =
+    "image-upload-actions";
+  var chooseBtn =
+    document.createElement("button");
+  chooseBtn.type =
+    "button";
+  chooseBtn.className =
+    "btn ghost";
+  chooseBtn.textContent =
+    currentImage
+    ? "Changer l'image"
+    : "Choisir une image";
+  var removeBtn =
+    document.createElement("button");
+  removeBtn.type =
+    "button";
+  removeBtn.className =
+    "btn ghost";
+  removeBtn.textContent =
+    "Retirer";
+  removeBtn.style.display =
+    currentImage
+    ? "inline-block"
+    : "none";
+  chooseBtn.onclick =
+    function(){
+      fileInput.click();
+    };
+  removeBtn.onclick =
+    function(){
+      currentImage = null;
+      previewImg.style.display =
+        "none";
+      emptyLabel.style.display =
+        "block";
+      chooseBtn.textContent =
+        "Choisir une image";
+      removeBtn.style.display =
+        "none";
+    };
+  fileInput.onchange =
+    function(){
+      var file =
+        fileInput.files[0];
+      if(!file) return;
+      chooseBtn.textContent =
+        "Traitement...";
+      processImageFile(
+        file,
+        function(dataUrl){
+          currentImage =
+            dataUrl;
+          previewImg.src =
+            dataUrl;
+          previewImg.style.display =
+            "block";
+          emptyLabel.style.display =
+            "none";
+          chooseBtn.textContent =
+            "Changer l'image";
+          removeBtn.style.display =
+            "inline-block";
+        }
+      );
+    };
+  uploadActions.appendChild(
+    chooseBtn
+  );
+  uploadActions.appendChild(
+    removeBtn
+  );
+  imgBox.appendChild(
+    previewImg
+  );
+  imgBox.appendChild(
+    emptyLabel
+  );
+  imgBox.appendChild(
+    uploadActions
+  );
+  var imgHint =
+    document.createElement("div");
+  imgHint.className =
+    "field-hint";
+  imgHint.textContent =
+    "L'image est redimensionnee et compressee automatiquement.";
+  imgField.appendChild(
+    imgLabel
+  );
+  imgField.appendChild(
+    imgBox
+  );
+  imgField.appendChild(
+    imgHint
+  );
+  imgField.appendChild(
+    fileInput
+  );
+  /* CATEGORIE */
+  var catField =
+    document.createElement("div");
+  catField.className =
+    "field";
+  var catLabel =
+    document.createElement("label");
+  catLabel.textContent =
+    "Rubrique";
+  var catSelect =
+    document.createElement("select");
+  CATEGORIES.forEach(
+    function(c){
+      var opt =
+        document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      if(
+        editing
+        &&
+        editing.category === c
+      ){
+        opt.selected = true;
+      }
+      catSelect.appendChild(opt);
+    }
+  );
+  catField.appendChild(
+    catLabel
+  );
+  catField.appendChild(
+    catSelect
+  );
+  /* AUTEUR */
+  var authorField =
+    makeField(
+      "Auteur",
+      "input",
+      editing
+      ? editing.author
+      : "",
+      "Nom du journaliste"
+    );
+  /* UNE */
+  var featuredField =
+    document.createElement("div");
+  featuredField.className =
+    "field checkbox-row";
+  var featChk =
+    document.createElement("input");
+  featChk.type =
+    "checkbox";
+  featChk.checked =
+    !!(
+      editing
+      &&
+      editing.featured
+    );
+  var featLabel =
+    document.createElement("label");
+  featLabel.textContent =
+    "Mettre a la une";
+  featLabel.style.marginBottom =
+    "0";
+  featuredField.appendChild(
+    featChk
+  );
+  featuredField.appendChild(
+    featLabel
+  );
+  /* BOUTONS */
+  var savePubBtn =
+    document.createElement("button");
+  savePubBtn.className =
+    "btn block";
+  savePubBtn.style.marginBottom =
+    "10px";
+  savePubBtn.textContent =
+    "Publier";
+  var saveDraftBtn =
+    document.createElement("button");
+  saveDraftBtn.className =
+    "btn ghost block";
+  saveDraftBtn.textContent =
+    "Enregistrer en brouillon";
+  sideCard.appendChild(
+    imgField
+  );
+  sideCard.appendChild(
+    catField
+  );
+  sideCard.appendChild(
+    authorField.wrap
+  );
+  sideCard.appendChild(
+    featuredField
+  );
+  sideCard.appendChild(
+    savePubBtn
+  );
+  sideCard.appendChild(
+    saveDraftBtn
+  );
+  grid.appendChild(
+    mainCard
+  );
+  grid.appendChild(
+    sideCard
+  );
+  wrap.appendChild(
+    grid
+  );
+  function doSave(status){
+    var title =
+      titleField.input.value.trim();
+    var dek =
+      dekField.input.value.trim();
+    var body =
+      bodyField.input.value.trim();
+    var category =
+      catSelect.value;
+    var author =
+      authorField.input.value.trim()
+      ||
+      "Redaction Atlas";
+    var featured =
+      featChk.checked;
+    if(
+      !title
+      ||
+      !dek
+      ||
+      !body
+    ){
+      errText.textContent =
+        "Le titre, le chapo et le corps de l'article sont obligatoires.";
+      errText.style.display =
+        "block";
+      return;
+    }
+    errText.style.display =
+      "none";
+    if(editing){
+      editing.title =
+        title;
+      editing.dek =
+        dek;
+      editing.body =
+        body;
+      editing.category =
+        category;
+      editing.author =
+        author;
+      editing.featured =
+        featured;
+      editing.status =
+        status;
+      editing.image =
+        currentImage;
+    }
+    else{
+      articles.push({
+        id:
+          "a"+Date.now(),
+        title:title,
+        dek:dek,
+        body:body,
+        category:category,
+        author:author,
+        featured:featured,
+        status:status,
+        date:Date.now(),
+        image:currentImage
+      });
+    }
+    saveArticles()
+      .then(function(){
+        showToast(
+          status === "published"
+          ? "Article publie"
+          : "Brouillon enregistre"
+        );
+        goto("admin");
+      });
+  }
+  savePubBtn.onclick =
+    function(){
+      doSave("published");
+    };
+  saveDraftBtn.onclick =
+    function(){
+      doSave("draft");
+    };
+  return wrap;
+}
+/* ============================================================
+   FOOTER
+   ============================================================ */
+function renderFooter(){
+  var f =
+    document.createElement("footer");
+  f.textContent =
+    new Date().getFullYear()
+    +
+    " ATLAS. Tous droits réservés.";
+  return f;
+}
+/* ============================================================
+   DEMARRAGE
+   ============================================================ */
+loadArticles();
+</script>
+</body>
+</html>
